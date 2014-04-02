@@ -1,6 +1,7 @@
 id: 4	Name: Dima	Month salary:  8000
 id: 0	Name: Taras	Month salary:  7000
 id: 5	Name: Anya	Month salary:  6400
-id: 2	Name: Oleg	Month salary:  3500
+id: 6	Name: Anton	Month salary:  3000
 id: 1	Name: Ivan	Month salary:  3000
+id: 2	Name: Oleg	Month salary:  3000
 id: 3	Name: Vasya	Month salary:  2000

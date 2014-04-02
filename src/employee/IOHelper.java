@@ -16,15 +16,13 @@ public class IOHelper {
             if(!file.exists()){
                 file.createNewFile();
             }
-            PrintWriter out = new PrintWriter(file.getAbsoluteFile());
 
-            try {
-                for (Employee i : employeeList){
-                    out.print(i);
+            try (PrintWriter out = new PrintWriter(file.getAbsoluteFile())) {
+                out.println("id" + "Name" + "Month salary" + "Type of salary" );
+                for (Employee i : employeeList) {
+                    out.println(i.id() + i.getName() + i.averageSalary() + i.getEmployeeTypeOfSalary());
                 }
 
-            } finally {
-                out.close();
             }
         } catch(IOException e) {
             throw new RuntimeException(e);
@@ -32,12 +30,11 @@ public class IOHelper {
     }
 
     public static List<Employee> readListFromFile(String fileName) throws FileNotFoundException {
-        List<Employee> outEmployeeList = new ArrayList<Employee>();
+        List<Employee> outEmployeeList = new ArrayList<>();
 
         exists(fileName);
         try {
-            BufferedReader in = new BufferedReader(new FileReader( new File(fileName).getAbsoluteFile()));
-            try {
+            try (BufferedReader in = new BufferedReader(new FileReader( new File(fileName).getAbsoluteFile()))) {
                 String s;
                 while ((s = in.readLine()) != null) {
                     String nameInString = s.substring(s.indexOf("Name: ") + "Name: ".length(), s.indexOf("Month"));
@@ -45,8 +42,6 @@ public class IOHelper {
                     int salaryToEmployee = new Integer(s.substring(s.indexOf("Month salary:  ") + "Month salary:  ".length() ));
                     Collections.addAll(outEmployeeList, new EmployeeFixSalary(nameToEmployee, salaryToEmployee));
                 }
-            } finally {
-                in.close();
             }
         } catch(IOException e) {
             throw new RuntimeException(e);
@@ -69,16 +64,11 @@ public class IOHelper {
     }
 
     public static void outLastItemsFromCollection(List<? > listNames, int amountOfItem){
-        ListIterator<? > it = listNames.listIterator();
-        while (it.hasNext())   {
-            it.next();
-        }
-        for (int k = 0 ; it.hasPrevious() && k < amountOfItem; k++ ){
-            it.previous();
-        }
+        ListIterator<? > it = listNames.listIterator(listNames.size() - amountOfItem);
         while (it.hasNext())   {
             System.out.println(it.next());
         }
+
     }
 
 }
