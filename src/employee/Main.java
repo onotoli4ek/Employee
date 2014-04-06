@@ -42,21 +42,24 @@ public class Main   {
             System.out.println(i);
         }
         System.out.println("Task a: ");
-        Collections.sort(employeeList);
+//        Collections.sort(employeeList);
+//        for (Employee i : employeeList){
+//            System.out.println(i);
+//        }
+
+//        System.out.println("Task b: ");
+//        IOHelper.outFirstItemsFromCollection(employeeList, 5);
+//        System.out.println("Task c: ");
+//        IOHelper.outLastItemsFromCollection(employeeList, 4);
+        System.out.println("Task d: ");
+        String fileName = "C:/Documents and Settings/Admin/IdeaProjects/Employee/Employee/data.csv";
+        System.out.println("Write from file");
+        IOHelper.writeListToFile(employeeList,fileName);
+        IOHelper.readListFromFile(employeeList,fileName);
         for (Employee i : employeeList){
             System.out.println(i);
         }
 
-        System.out.println("Task b: ");
-        IOHelper.outFirstItemsFromCollection(employeeList,5);
-        System.out.println("Task c: ");
-        IOHelper.outLastItemsFromCollection(employeeList, 4);
-        System.out.println("Task d: ");
-        String fileName = "C:/Documents and Settings/Administrator/IdeaProjects/Employee/data.csv";
-        IOHelper.writeListToFile(employeeList, fileName);
-        System.out.println("Write from file");
-        for (Employee i : IOHelper.readListFromFile(fileName)){
-            System.out.println(i);
-        }
+        System.out.println(IOHelper.correctFormatOfFileEmployees(fileName));
     }
 }

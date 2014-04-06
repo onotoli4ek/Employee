@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IOHelper {
 
-
     public static void writeListToFile(List<Employee> employeeList, String fileName){
-
         File file = new File(fileName);
         try {
             if(!file.exists()){
@@ -18,36 +18,74 @@ public class IOHelper {
             }
 
             try (PrintWriter out = new PrintWriter(file.getAbsoluteFile())) {
-                out.println("id" + "Name" + "Month salary" + "Type of salary" );
+                out.println("id" + "\t" + "Name" + "\t" + "Month salary" + "\t" + "Type of salary");
                 for (Employee i : employeeList) {
-                    out.println(i.id() + i.getName() + i.averageSalary() + i.getEmployeeTypeOfSalary());
+                    out.println(i.id()+ "\t" + i.getName()+ "\t" + i.averageSalary()+ "\t" + i.getEmployeeTypeOfSalary());
                 }
-
             }
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static List<Employee> readListFromFile(String fileName) throws FileNotFoundException {
-        List<Employee> outEmployeeList = new ArrayList<>();
-
+    public static void readListFromFile(List<Employee> outEmployeeList, String fileName) throws FileNotFoundException {
         exists(fileName);
         try {
             try (BufferedReader in = new BufferedReader(new FileReader( new File(fileName).getAbsoluteFile()))) {
                 String s;
-                while ((s = in.readLine()) != null) {
-                    String nameInString = s.substring(s.indexOf("Name: ") + "Name: ".length(), s.indexOf("Month"));
-                    String nameToEmployee = nameInString.substring(0,nameInString.indexOf("\t"));
-                    int salaryToEmployee = new Integer(s.substring(s.indexOf("Month salary:  ") + "Month salary:  ".length() ));
-                    Collections.addAll(outEmployeeList, new EmployeeFixSalary(nameToEmployee, salaryToEmployee));
+                String regEx = "^(\\d+)\t(\\D+)\t(\\d+)\t([hf])";
+                Pattern pattern = Pattern.compile(regEx);
+                if (in.readLine().equals("id\tName\tMonth salary\tType of salary")){
+                    Matcher matcher;
+                    while ((s = in.readLine()) != null && pattern.matcher(s).matches() ) {
+                        matcher = pattern.matcher(s);
+                        matcher.matches();
+                        String nameInString = matcher.group(2);
+                        if (matcher.group(4).equals("f"))   {
+                            Collections.addAll(outEmployeeList, new EmployeeFixSalary(nameInString, new Integer(matcher.group(3))));
+                        } else if (matcher.group(4).equals("h"))   {
+                            int salary = (int)(new Integer(matcher.group(3))/(EmployeeWithHourlyPay.HOURSE_PER_DAY*EmployeeWithHourlyPay.DAYS_PER_MONTH));
+                            Collections.addAll(outEmployeeList, new EmployeeWithHourlyPay(nameInString, salary));
+                        }
+                    }
                 }
+
             }
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
 
-        return outEmployeeList;
+    }
+
+    public static boolean correctFormatOfFileEmployees (String path) {
+        boolean correctFile = false;
+        try {
+            exists(path);
+        } catch(FileNotFoundException e) {
+            System.err.format("Error: %s",e);
+            return false;
+        }
+        try (BufferedReader in = new BufferedReader(new FileReader( new File(path).getAbsoluteFile()))) {
+            String s;
+            String regEx = "^(\\d+)\t(\\D+)\t(\\d+)\t([hf])";
+            Pattern pattern = Pattern.compile(regEx);
+            if (in.readLine().equals("id\tName\tMonth salary\tType of salary")){
+                Matcher matcher;
+                while ((s = in.readLine()) != null) {
+                    matcher = pattern.matcher(s);
+                    if (matcher.matches()){
+                        correctFile = true;
+                    } else {
+                        correctFile = false;
+                        break;
+                    }
+                }
+            }
+
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        return correctFile;
     }
     private static void exists(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
@@ -68,8 +106,6 @@ public class IOHelper {
         while (it.hasNext())   {
             System.out.println(it.next());
         }
-
     }
-
 }
 
