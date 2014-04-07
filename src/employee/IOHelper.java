@@ -54,7 +54,6 @@ public class IOHelper {
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static boolean correctFormatOfFileEmployees (String path) {

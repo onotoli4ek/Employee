@@ -26,6 +26,26 @@ public abstract class Employee implements Comparable<Employee> {
     abstract int averageSalary();
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Employee employee = (Employee) o;
+
+        if (employeeTypeOfSalary != employee.employeeTypeOfSalary) return false;
+        if (!name.equals(employee.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) employeeTypeOfSalary;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
     public int compareTo(Employee entry) {
         int result = entry.averageSalary() - averageSalary();
         return result != 0

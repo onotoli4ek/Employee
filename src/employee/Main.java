@@ -28,13 +28,13 @@ import java.util.List;
 public class Main   {
     public static void main(String[] args)  throws FileNotFoundException {
         Employee emp1 = new EmployeeFixSalary("Taras", 7000);
-        Employee emp2 = new EmployeeFixSalary("Ivan", 3000);
+        Employee emp2 = new EmployeeFixSalary("Oleg", 3000);
         Employee emp3 = new EmployeeFixSalary("Oleg", 3000);
         Employee emp4 = new EmployeeFixSalary("Vasya", 2000);
         Employee emp5 = new EmployeeWithHourlyPay("Dima", 50);
         Employee emp6 = new EmployeeWithHourlyPay("Anya", 40);
         Employee emp7 = new EmployeeFixSalary("Anton", 3000);
-
+        System.out.println(emp2.equals(emp3));
         List<Employee> employeeList = new ArrayList<>();
         Collections.addAll(employeeList, emp1, emp2, emp3, emp4, emp5, emp6, emp7);
         System.out.println("Employee's list: ");
@@ -42,15 +42,15 @@ public class Main   {
             System.out.println(i);
         }
         System.out.println("Task a: ");
-//        Collections.sort(employeeList);
-//        for (Employee i : employeeList){
-//            System.out.println(i);
-//        }
+        Collections.sort(employeeList);
+        for (Employee i : employeeList){
+            System.out.println(i);
+        }
 
-//        System.out.println("Task b: ");
-//        IOHelper.outFirstItemsFromCollection(employeeList, 5);
-//        System.out.println("Task c: ");
-//        IOHelper.outLastItemsFromCollection(employeeList, 4);
+        System.out.println("Task b: ");
+        IOHelper.outFirstItemsFromCollection(employeeList, 5);
+        System.out.println("Task c: ");
+        IOHelper.outLastItemsFromCollection(employeeList, 4);
         System.out.println("Task d: ");
         String fileName = "C:/Documents and Settings/Admin/IdeaProjects/Employee/Employee/data.csv";
         System.out.println("Write from file");
