@@ -5,7 +5,7 @@ public class EmployeeFixSalary extends Employee {
     private final int fixSalary;
 
     public EmployeeFixSalary (String name, int salary){
-        super(name,EMPLOYEE_TYPE_OF_SALARY);
+        super(name , EMPLOYEE_TYPE_OF_SALARY);
         this.fixSalary = salary;
     }
 

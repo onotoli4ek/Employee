@@ -34,17 +34,15 @@ public class Main   {
         Employee emp5 = new EmployeeWithHourlyPay("Dima", 50);
         Employee emp6 = new EmployeeWithHourlyPay("Anya", 40);
         Employee emp7 = new EmployeeFixSalary("Anton", 3000);
-        Employee emp8 = new EmployeeFixSalary(10,"Danil",3000);
         Employee emp9 = new EmployeeFixSalary("Oleg", 3000);
-//        Employee emp9 = new EmployeeFixSalary("Oleg", 3000);
         System.out.println(emp2.equals(emp3));
         List<Employee> employeeList = new ArrayList<>();
-        Collections.addAll(employeeList, emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9,new EmployeeFixSalary("Oleg", 3000),new EmployeeFixSalary("Oleg", 3000),new EmployeeFixSalary("Oleg", 3000));
+        Collections.addAll(employeeList, emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp9);
         System.out.println("Employee's list: ");
         for (Employee i : employeeList){
             System.out.println(i);
         }
-        System.out.println(emp8.equals(emp7));
+//        System.out.println(emp8.equals(emp7));
 //        System.out.println(IOHelper.amountSameItemsInList(employeeList,emp9));
 //        System.out.println("Task a: ");
 //        Collections.sort(employeeList);
@@ -61,11 +59,12 @@ public class Main   {
         System.out.println("Write from file");
 //        IOHelper.writeListToFile(employeeList,fileName);
 //        System.out.println("~~~~~~~~");
-//        IOHelper.readListFromFile(employeeList,fileName);
-//        System.out.println("~~~~~~");
-//        for (Employee i : employeeList){
-//            System.out.println(i);
-//        }
+        System.out.println("READ");
+        IOHelper.readListFromFile(employeeList,fileName);
+        System.out.println("~~~~~~");
+        for (Employee i : employeeList){
+            System.out.println(i);
+        }
 
 //        System.out.println(IOHelper.correctFormatOfFileEmployees(fileName));
     }

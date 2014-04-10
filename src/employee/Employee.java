@@ -5,13 +5,24 @@ public abstract class Employee implements Comparable<Employee> {
     private final char employeeTypeOfSalary;
 
     private static int counter;
-    private final int id = counter++;
+//    private final int id = counter++;
+    private final int id;
     private final String name;
 
     public Employee(String name, char typeSalary){
+        this.id = counter++;
         employeeTypeOfSalary = typeSalary;
         this.name = name;
     }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void previousCounter() {
+        counter--;
+    }
+
     public int id(){
         return id;
     }

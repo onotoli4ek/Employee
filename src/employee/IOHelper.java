@@ -36,53 +36,32 @@ public class IOHelper {
                 Pattern pattern = Pattern.compile(regEx);
                 if (in.readLine().equals("id\tName\tMonth salary\tType of salary")){
                     Matcher matcher;
-                    System.out.println("!!!!!!");
-
                     while ((s = in.readLine()) != null && pattern.matcher(s).matches() ) {
-//                        while ((s = in.readLine()) != null) {
-                        System.out.println("!!");
                         matcher = pattern.matcher(s);
                         matcher.matches();
-//                        int idInString = new Integer(matcher.group(1));
                         String nameInString = matcher.group(2);
                         int salaryInString = new Integer(matcher.group(3));
                         String typeSalaryInSting = matcher.group(4);
                         Employee currentEmployee;
-                        System.out.println(typeSalaryInSting);
-
                         if (typeSalaryInSting.equals("f"))   {
-                            System.out.println("Go f");
                             currentEmployee = new EmployeeFixSalary(nameInString,salaryInString);
-//                            System.out.println(currentEmployee);
                             Collections.addAll(outEmployeeList, currentEmployee);
-//                            System.out.println(amountSameItemsInList(outEmployeeList, currentEmployee));
-//                            System.out.println(outEmployeeList.size());
-//                            System.out.println(outEmployeeList.get(outEmployeeList.size()-1));
-//                            System.out.println("count" + Employee.getCounter());
-
                             if (amountSameItemsInList(outEmployeeList, currentEmployee) > 1){
-                                System.out.println(amountSameItemsInList(outEmployeeList, currentEmployee));
-                                System.out.println(outEmployeeList.get(outEmployeeList.size()-1));
-//                                outEmployeeList.remove(outEmployeeList.size()-1);
                                 outEmployeeList.remove(outEmployeeList.size()-1);
-
-                            } else {
-//                                Employee.nextCounter();
+                                Employee.previousCounter();
                             }
                         } else if (typeSalaryInSting.equals("h"))   {
-                            System.out.println("Go h");
-                            salaryInString = (int) salaryInString/(EmployeeWithHourlyPay.HOURSE_PER_DAY*EmployeeWithHourlyPay.DAYS_PER_MONTH);
+                            salaryInString = salaryInString/(EmployeeWithHourlyPay.HOURSE_PER_DAY*EmployeeWithHourlyPay.DAYS_PER_MONTH);
                             currentEmployee = new EmployeeWithHourlyPay(nameInString, salaryInString);
                             Collections.addAll(outEmployeeList, currentEmployee);
                             if (amountSameItemsInList(outEmployeeList, currentEmployee) > 1){
-//                                outEmployeeList.remove(Employee.getCounter());
-                                System.out.println(outEmployeeList.get(outEmployeeList.size()-1));
                                 outEmployeeList.remove(outEmployeeList.size()-1);
+                                Employee.previousCounter();
+
                             }
                         }
                     }
                 }
-
             }
         } catch(IOException e) {
             throw new RuntimeException(e);
