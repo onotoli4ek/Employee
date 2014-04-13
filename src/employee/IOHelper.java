@@ -45,19 +45,20 @@ public class IOHelper {
                         Employee currentEmployee;
                         if (typeSalaryInSting.equals("f"))   {
                             currentEmployee = new EmployeeFixSalary(nameInString,salaryInString);
-                            Collections.addAll(outEmployeeList, currentEmployee);
-                            if (amountSameItemsInList(outEmployeeList, currentEmployee) > 1){
-                                outEmployeeList.remove(outEmployeeList.size()-1);
+                            if (!outEmployeeList.contains(currentEmployee)){
+                                Collections.addAll(outEmployeeList, currentEmployee);
+                            }
+                            else {
                                 Employee.previousCounter();
                             }
                         } else if (typeSalaryInSting.equals("h"))   {
                             salaryInString = salaryInString/(EmployeeWithHourlyPay.HOURSE_PER_DAY*EmployeeWithHourlyPay.DAYS_PER_MONTH);
                             currentEmployee = new EmployeeWithHourlyPay(nameInString, salaryInString);
-                            Collections.addAll(outEmployeeList, currentEmployee);
-                            if (amountSameItemsInList(outEmployeeList, currentEmployee) > 1){
-                                outEmployeeList.remove(outEmployeeList.size()-1);
+                            if (!outEmployeeList.contains(currentEmployee)) {
+                                Collections.addAll(outEmployeeList, currentEmployee);
+                            }
+                            else {
                                 Employee.previousCounter();
-
                             }
                         }
                     }
@@ -66,16 +67,6 @@ public class IOHelper {
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static int amountSameItemsInList (List<Employee> employeeList, Employee employee){
-        int sameItems = 0;
-        for (Employee i : employeeList)  {
-            if (i.equals(employee)){
-                sameItems++;
-            }
-        }
-        return sameItems;
     }
 
     public static boolean correctFormatOfFileEmployees (String path) {
